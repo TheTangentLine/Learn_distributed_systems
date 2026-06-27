@@ -1,0 +1,34 @@
+services:
+  node1:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      NODE_ADDR: "node1:8081"
+      NODE_LIST: "node1:8081,node2:8082,node3:8083"
+    networks:
+      - kvnet
+
+  node2:
+    build: .
+    ports:
+      - "8082:8082"
+    environment:
+      NODE_ADDR: "node2:8082"
+      NODE_LIST: "node1:8081,node2:8082,node3:8083"
+    networks:
+      - kvnet
+
+  node3:
+    build: .
+    ports:
+      - "8083:8083"
+    environment:
+      NODE_ADDR: "node3:8083"
+      NODE_LIST: "node1:8081,node2:8082,node3:8083"
+    networks:
+      - kvnet
+
+networks:
+  kvnet:
+    driver: bridge

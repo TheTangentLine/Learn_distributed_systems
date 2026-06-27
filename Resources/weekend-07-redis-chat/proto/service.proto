@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "./proto";
+
+service ChatService {
+  rpc SendMessage (Message) returns (Ack);
+  rpc Subscribe   (SubscribeRequest) returns (stream Message);
+}
+
+message Message {
+  string body = 1;
+  string from = 2;
+}
+
+message Ack {
+  string status = 1;
+}
+
+message SubscribeRequest {
+  string username = 1;
+}

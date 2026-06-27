@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "./proto";
+
+service ChatService {
+  rpc SendMessage (Message) returns (Ack);
+  rpc Subscribe   (SubscribeRequest) returns (stream Message);
+}
+
+// lamport_ts (field 3) is the Lamport timestamp assigned by the server
+// at broadcast time. Clients use it to sort messages into causal order.
+message Message {
+  string body        = 1;
+  string from        = 2;
+  uint64 lamport_ts  = 3;
+}
+
+message Ack {
+  string status = 1;
+}
+
+message SubscribeRequest {
+  string username = 1;
+}
